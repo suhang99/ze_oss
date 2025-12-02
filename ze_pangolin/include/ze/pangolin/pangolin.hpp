@@ -31,7 +31,10 @@
 #include <thread>
 #include <ze/common/types.hpp>
 #include <ze/common/logging.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wparentheses"  // pangolin's picojson uses assignment in condition
 #include <pangolin/pangolin.h>
+#pragma GCC diagnostic pop
 #include <ze/common/noncopyable.hpp>
 
 namespace ze {
