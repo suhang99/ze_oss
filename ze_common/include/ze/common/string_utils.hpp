@@ -39,13 +39,16 @@ namespace ze {
 
 inline std::string& leftTrimString(std::string& s)
 {
-  s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+  // std::ptr_fun/std::not1 were removed in C++17; use a lambda (works in C++14 too).
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+          [](int ch) { return !std::isspace(ch); }));
   return s;
 }
 
 inline std::string& rightTrimString(std::string& s)
 {
-  s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+  s.erase(std::find_if(s.rbegin(), s.rend(),
+          [](int ch) { return !std::isspace(ch); }).base(), s.end());
   return s;
 }
 

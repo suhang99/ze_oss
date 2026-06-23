@@ -21,8 +21,10 @@ set(SOURCES
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
-find_library(RT_LIBRARY NAMES rt librt)
-target_link_libraries(${PROJECT_NAME} ${RT_LIBRARY})
+if(NOT APPLE)
+  find_library(RT_LIBRARY NAMES rt librt)
+  target_link_libraries(${PROJECT_NAME} ${RT_LIBRARY})
+endif()
 
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})

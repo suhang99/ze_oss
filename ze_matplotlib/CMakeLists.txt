@@ -7,7 +7,7 @@ catkin_simple()
 include(ze_setup)
 
 # The matplotlib-cpp headers are linked against
-find_package(PythonLibs)
+find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
 #############
@@ -22,7 +22,9 @@ set(SOURCES
   )
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${PROJECT_NAME} ${PYTHON_LIBRARY})
+# FindPythonLibs sets PYTHON_LIBRARIES (plural); the old PYTHON_LIBRARY was empty,
+# so libpython was never linked and the symbol only failed at load time on macOS.
+target_link_libraries(${PROJECT_NAME} ${PYTHON_LIBRARIES})
 
 ###############
 # EXECUTABLES #
